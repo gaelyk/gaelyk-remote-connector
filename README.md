@@ -33,7 +33,7 @@ filter in your `web.xml` configuration file.
 ```
 
 To enable connection to the remote application you need to specify your credentials in `gaelyk-remote-connector.properties` file
-under `src\main\resources` (assuming you are having maven or gradle source structure).
+under `src/main/resources` (assuming you are having maven or gradle source structure).
 
 ```
 appid=yourgaeappid
