@@ -10,9 +10,7 @@ import javax.servlet.ServletException
 import javax.servlet.ServletRequest
 import javax.servlet.ServletResponse
 
-import org.gradle.internal.SystemProperties;
-
-import com.google.appengine.api.utils.SystemProperty;
+import com.google.appengine.api.utils.SystemProperty
 import com.google.appengine.tools.remoteapi.RemoteApiInstaller
 import com.google.appengine.tools.remoteapi.RemoteApiOptions
 
