@@ -17,6 +17,8 @@ import com.google.appengine.tools.remoteapi.RemoteApiOptions
 class RemoteConnectorFilter implements Filter {
 
     static final String CONF_FILE_NAME = 'gaelyk-remote-connector.properties'
+    
+    private RemoteApiOptions options
 
     @Override public void destroy() {}
     
@@ -61,7 +63,7 @@ class RemoteConnectorFilter implements Filter {
             }
         }
 
-        def options =  new RemoteApiOptions()
+        options = new RemoteApiOptions()
                 .server("${props.appid}.appspot.com", 443)
                 .credentials(props.username, props.password)
         if(props.path){
