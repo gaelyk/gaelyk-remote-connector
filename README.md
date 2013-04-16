@@ -57,7 +57,7 @@ You also need to enable remote API in your `web.xml` in application you want to 
 </servlet-mapping>
 ```
 
-Also if you're running ancestor queries, the application server of the development server must be `s~yourgaeappid`.
+Also if you're running ancestor queries, the application id of the development server must be `s~yourgaeappid`.
 Set it in `appengine-web.xml` file:
 
 ```
