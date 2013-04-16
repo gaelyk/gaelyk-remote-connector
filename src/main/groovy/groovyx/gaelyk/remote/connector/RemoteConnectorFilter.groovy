@@ -10,6 +10,9 @@ import javax.servlet.ServletException
 import javax.servlet.ServletRequest
 import javax.servlet.ServletResponse
 
+import org.gradle.internal.SystemProperties;
+
+import com.google.appengine.api.utils.SystemProperty;
 import com.google.appengine.tools.remoteapi.RemoteApiInstaller
 import com.google.appengine.tools.remoteapi.RemoteApiOptions
 
@@ -19,6 +22,9 @@ class RemoteConnectorFilter implements Filter {
     static final String CONF_FILE_NAME = 'gaelyk-remote-connector.properties'
     
     private RemoteApiOptions options
+    
+    private String originalAppId
+    private String remoteAppId
 
     @Override public void destroy() {}
     
@@ -27,13 +33,19 @@ class RemoteConnectorFilter implements Filter {
                 def remoteInstaller = new RemoteApiInstaller()
                 remoteInstaller.install(options)
                 request.__installer__ = remoteInstaller
+                
+                SystemProperty.applicationId.set(remoteAppId)
         }
+        
+        
 
         chain.doFilter(request, response)
         
         if(request.__installer__){
             request.__installer__.uninstall()
             request.__installer__ = null
+            
+            SystemProperty.applicationId.set(originalAppId)
         }
     }
     @Override public void init(FilterConfig config) throws ServletException {
@@ -41,6 +53,8 @@ class RemoteConnectorFilter implements Filter {
             return
         }
 
+        originalAppId = SystemProperty.applicationId.get()
+        
         InputStream confStream = getClass().getResourceAsStream("/$CONF_FILE_NAME")
 
         if(!confStream){
@@ -63,6 +77,8 @@ class RemoteConnectorFilter implements Filter {
             }
         }
 
+        remoteAppId = props.appid
+        
         options = new RemoteApiOptions()
                 .server("${props.appid}.appspot.com", 443)
                 .credentials(props.username, props.password)
