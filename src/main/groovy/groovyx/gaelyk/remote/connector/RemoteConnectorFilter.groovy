@@ -25,9 +25,16 @@ class RemoteConnectorFilter implements Filter {
     
     @Override public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         if(!request.__installer__){
+            try {
                 def remoteInstaller = new RemoteApiInstaller()
                 remoteInstaller.install(options)
                 request.__installer__ = remoteInstaller
+            } catch(IllegalStateException e){
+                if(e.message != 'remote API is already installed'){
+                    throw e
+                }
+            }
+
                 
                 
         }
