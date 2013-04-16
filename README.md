@@ -62,7 +62,9 @@ Set it in `appengine-web.xml` file:
 
 ```
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
+    ...
     <application>s~yourgaeappid</application>
+    ...
 </appengine-web-app>
 ```
 
