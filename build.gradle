@@ -1,0 +1,58 @@
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+	
+	dependencies {
+		classpath 'org.gradle.api.plugins:gradle-nexus-plugin:0.2'
+	}
+}
+
+
+apply from: 'https://raw.github.com/gaelyk/gaelyk/master/common.gradle'
+apply from: 'https://raw.github.com/gaelyk/gaelyk/master/common-nexus.gradle'
+
+archivesBaseName = "gaelyk-remote-connector"
+version = ext.gaelykLatestVersion
+group = 'org.gaelyk'
+
+dependencies {
+	groovy "org.codehaus.groovy:groovy-all:${ext.gaelykGroovyVersion}"
+	compile	"org.gaelyk:gaelyk-resources:${ext.gaelykLatestVersion}"
+    compile "com.google.appengine:appengine-remote-api:$ext.gaelykAppEngineVersion"
+	testCompile "org.spockframework:spock-core:${ext.gaelykSpockVersion}"
+	testCompile	"com.google.appengine:appengine-api-stubs:${ext.gaelykAppEngineVersion}"
+	testCompile "com.google.appengine:appengine-testing:${ext.gaelykAppEngineVersion}"
+}
+
+modifyPom {
+	project {
+		name 'Gaelyk Remote Connector Plugin'
+		packaging 'jar'
+		description 'Gaelyk Remote Connector Plugin provides simple way how to connect to running application from your development server.'
+		url 'https://github.com/gaelyk/gaelyk-remote-connector'
+
+		scm {
+			url 'scm:git@github.com:github.com/gaelyk/gaelyk-remote-connector.git'
+			connection 'scm:git@github.com:github.com/gaelyk/gaelyk-remote-connector.git'
+			developerConnection 'scm:git@github.com:gaelyk/github.com/gaelyk/gaelyk-remote-connector.git'
+		}
+
+		licenses {
+			license {
+				name 'The Apache Software License, Version 2.0'
+				url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+				distribution 'repo'
+			}
+		}
+
+		developers {
+			developer {
+				id 'vladimirorany'
+				name 'Vladimir Orany'
+			}
+		}
+	}
+}
+
+
