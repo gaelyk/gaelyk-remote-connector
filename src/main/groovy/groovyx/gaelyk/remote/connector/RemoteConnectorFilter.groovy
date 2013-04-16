@@ -1,4 +1,4 @@
-package groovyx.gaelyk.plugin.remote.connector
+package groovyx.gaelyk.remote.connector
 
 import groovy.util.logging.Log
 import groovyx.gaelyk.GaelykBindingEnhancer

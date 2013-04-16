@@ -1,6 +1,6 @@
 #Gaelyk Remote Connector
 
-Gaelyk Remote Connector Plugins helps you connecto to your application with your development server.
+Gaelyk Remote Connector helps you connect to your application with your development server.
 The typical use case is if you want to run your development server against data stored in your test or production server.
 <!--
 #Installation
@@ -24,7 +24,7 @@ filter in your `web.xml` configuration file.
 ```
     <filter>
         <filter-name>RemoteConnectorFilter</filter-name>
-        <filter-class>groovyx.gaelyk.plugin.remote.connector.RemoteConnectorFilter</filter-class>
+        <filter-class>groovyx.gaelyk.remote.connector.RemoteConnectorFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>RemoteConnectorFilter</filter-name>

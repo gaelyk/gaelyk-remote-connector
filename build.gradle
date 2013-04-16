@@ -27,9 +27,9 @@ dependencies {
 
 modifyPom {
 	project {
-		name 'Gaelyk Remote Connector Plugin'
+		name 'Gaelyk Remote Connector'
 		packaging 'jar'
-		description 'Gaelyk Remote Connector Plugin provides simple way how to connect to running application from your development server.'
+		description 'Gaelyk Remote Connector provides simple way how to connect to running application from your development server.'
 		url 'https://github.com/gaelyk/gaelyk-remote-connector'
 
 		scm {
