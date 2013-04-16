@@ -20,9 +20,6 @@ class RemoteConnectorFilter implements Filter {
     static final String CONF_FILE_NAME = 'gaelyk-remote-connector.properties'
     
     private RemoteApiOptions options
-    
-    private String originalAppId
-    private String remoteAppId
 
     @Override public void destroy() {}
     
@@ -32,7 +29,7 @@ class RemoteConnectorFilter implements Filter {
                 remoteInstaller.install(options)
                 request.__installer__ = remoteInstaller
                 
-                SystemProperty.applicationId.set(remoteAppId)
+                
         }
         
         
@@ -42,16 +39,12 @@ class RemoteConnectorFilter implements Filter {
         if(request.__installer__){
             request.__installer__.uninstall()
             request.__installer__ = null
-            
-            SystemProperty.applicationId.set(originalAppId)
         }
     }
     @Override public void init(FilterConfig config) throws ServletException {
         if(!GaelykBindingEnhancer.localMode){
             return
         }
-
-        originalAppId = SystemProperty.applicationId.get()
         
         InputStream confStream = getClass().getResourceAsStream("/$CONF_FILE_NAME")
 
@@ -75,7 +68,7 @@ class RemoteConnectorFilter implements Filter {
             }
         }
 
-        remoteAppId = props.appid
+        SystemProperty.applicationId.set("s~$props.appid")
         
         options = new RemoteApiOptions()
                 .server("${props.appid}.appspot.com", 443)
