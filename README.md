@@ -18,6 +18,20 @@ dependencies {
 -->
 #Usage
 
+First of all you need to declare the `RemoteConnectorFilter` so it will be intercepting all calls. This should be the very first
+filter in your `web.xml` configuration file.
+
+```
+    <filter>
+        <filter-name>RemoteConnectorFilter</filter-name>
+        <filter-class>groovyx.gaelyk.plugin.remote.connector.RemoteConnectorFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>RemoteConnectorFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+```
+
 To enable connection to the remote application you need to specify your credentials in `gaelyk-remote-connector.properties` file
 under `src\main\resources` (assuming you are having maven or gradle source structure).
 
