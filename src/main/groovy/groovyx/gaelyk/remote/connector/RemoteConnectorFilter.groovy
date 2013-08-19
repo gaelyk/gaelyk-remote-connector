@@ -75,7 +75,6 @@ class RemoteConnectorFilter implements Filter {
             }
         }
 
-        SystemProperty.applicationId.set("s~$props.appid")
         
         options = new RemoteApiOptions()
                 .server("${props.appid}.appspot.com", 443)
