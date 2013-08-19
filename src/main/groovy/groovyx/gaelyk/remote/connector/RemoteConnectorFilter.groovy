@@ -56,7 +56,7 @@ class RemoteConnectorFilter implements Filter {
         InputStream confStream = getClass().getResourceAsStream("/$CONF_FILE_NAME")
 
         if(!confStream){
-            log.info "Gaelky Remote Connector disabled, configuration file ${CONF_FILE_NAME} found."
+            log.info "Gaelky Remote Connector disabled, configuration file ${CONF_FILE_NAME} not found."
             return
         }
 
