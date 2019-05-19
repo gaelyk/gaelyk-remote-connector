@@ -53,3 +53,7 @@ modifyPom {
 		}
 	}
 }
+
+wrapper {
+    gradleVersion = project.ext.gaelykGradleVersion
+}
