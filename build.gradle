@@ -4,25 +4,24 @@ buildscript {
 	}
 	
 	dependencies {
-		classpath 'org.gradle.api.plugins:gradle-nexus-plugin:0.2'
+		classpath 'org.gradle.api.plugins:gradle-nexus-plugin:0.3'
 	}
 }
-
 
 apply from: 'https://raw.github.com/gaelyk/gaelyk/master/common.gradle'
 apply from: 'https://raw.github.com/gaelyk/gaelyk/master/common-nexus.gradle'
 
 archivesBaseName = "gaelyk-remote-connector"
-version = ext.gaelykLatestVersion
+version = project.ext.gaelykLatestVersion
 group = 'org.gaelyk'
 
 dependencies {
-	groovy "org.codehaus.groovy:groovy-all:${ext.gaelykGroovyVersion}"
-	compile	"org.gaelyk:gaelyk-resources:${ext.gaelykLatestVersion}"
-    compile "com.google.appengine:appengine-remote-api:$ext.gaelykAppEngineVersion"
-	testCompile "org.spockframework:spock-core:${ext.gaelykSpockVersion}"
-	testCompile	"com.google.appengine:appengine-api-stubs:${ext.gaelykAppEngineVersion}"
-	testCompile "com.google.appengine:appengine-testing:${ext.gaelykAppEngineVersion}"
+	compile "org.codehaus.groovy:groovy-all:${project.ext.gaelykGroovyVersion}"
+	compile	"org.gaelyk:gaelyk:${project.ext.gaelykLatestVersion}"
+    compile "com.google.appengine:appengine-remote-api:${project.ext.gaelykAppEngineVersion}"
+	testCompile "org.spockframework:spock-core:${project.ext.gaelykSpockVersion}"
+	testCompile	"com.google.appengine:appengine-api-stubs:${project.ext.gaelykAppEngineVersion}"
+	testCompile "com.google.appengine:appengine-testing:${project.ext.gaelykAppEngineVersion}"
 }
 
 modifyPom {
@@ -54,5 +53,3 @@ modifyPom {
 		}
 	}
 }
-
-
