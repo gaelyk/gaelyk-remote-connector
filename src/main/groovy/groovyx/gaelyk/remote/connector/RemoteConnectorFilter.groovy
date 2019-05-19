@@ -33,18 +33,14 @@ class RemoteConnectorFilter implements Filter {
                 if(e.message != 'remote API is already installed'){
                     throw e
                 }
-            }
-
-                
+            }   
                 
         }
-        
-        
 
-        chain.doFilter(request, response)
-        
-        if(request.__installer__){
-            request.__installer__.uninstall()
+        try {
+            chain.doFilter(request, response)
+        } finally {
+            request.__installer__?.uninstall()
             request.__installer__ = null
         }
     }
@@ -60,14 +56,11 @@ class RemoteConnectorFilter implements Filter {
             return
         }
 
-
         Properties props = new Properties()
         props.load(confStream)
 
         for(String required in [
-            'appid',
-            'username',
-            'password'
+            'appid'
         ]){
             if(props.contains(required)){
                 log.warning "Connector disabled because '$required' is missing in configuration file $CONF_FILE_NAME"
@@ -78,16 +71,17 @@ class RemoteConnectorFilter implements Filter {
         
         options = new RemoteApiOptions()
                 .server("${props.appid}.appspot.com", 443)
-                .credentials(props.username, props.password)
+                .useApplicationDefaultCredential()
         if(props.path){
             options.remoteApiPath(props.path)
         }
 
         RemoteApiInstaller installer = new RemoteApiInstaller()
-        for (int i = 1; i <= 10; i++) {
+        for (int i = 1; i <= 3; i++) {
             try {
+                log.info "Gaelyk Remote Connector running against https://${props.appid}.appspot.com${props.path ?: ''} using ApplicationDefaultCredential"
                 installer.install(options)
-                log.info "Gaelyk Remote Connector running against https://${props.appid}.appspot.com${props.path ?: ''} using $props.username"
+                installer.uninstall()
                 break
             } catch(IllegalStateException e) {
                 if(e.message == 'remote API is already installed'){
@@ -95,19 +89,11 @@ class RemoteConnectorFilter implements Filter {
                 }
                 break
             } catch(e){
-                log.info "Failed to install remote api - attempt $i"
-                e.printStackTrace()
+                log.info "Failed to install remote api - attempt $i - ${e.toString()}"
                 if(i == 10){
                     return
                 }
             }
-        }
-        try {
-            // Update the options with reusable credentials so we can skip
-            // authentication on subsequent calls.
-            options.reuseCredentials(props.username, installer.serializeCredentials());
-        } finally {
-            installer.uninstall();
         }
     }
 }
